@@ -8,7 +8,7 @@ class PokemonPage extends React.Component {
   state = {
     pokemons: [],
     searching: false,
-    almost: []
+    searchResults: []
   };
 
   search = (e) => {
@@ -18,7 +18,7 @@ class PokemonPage extends React.Component {
     } else {
       this.setState({ searching: true})
     }
-    this.state.almost = this.state.pokemons.filter((x) => x.name.includes(query));
+    this.state.searchResults = this.state.pokemons.filter((x) => x.name.includes(query));
     //let found = this.state.pokemons.find(({ name }) => name === query);
     // console.log(found);
   };
@@ -29,7 +29,7 @@ class PokemonPage extends React.Component {
       .then((data) => {
         this.setState({
           pokemons: data,
-          almost: data,
+          searchResults: data,
         });
       });
   }
@@ -44,8 +44,9 @@ class PokemonPage extends React.Component {
         <Search search={this.search} />
         <br />
         <PokemonCollection
+
           //pokemons={this.state.pokemons}
-          pokemons={this.state.almost}
+          pokemons={this.state.searchResults}
         ></PokemonCollection>
       </div>
     );
