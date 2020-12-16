@@ -7,6 +7,24 @@ import { Container } from "semantic-ui-react";
 class PokemonPage extends React.Component {
   state = {
     pokemons: [],
+    searching: false,
+    almost: []
+  };
+
+  search = (e) => {
+    const query = e.target.value;
+    // query === "" ? this.setState({ searching == false}) : this.setState({searching==true})
+    if(query === "") {
+      this.setState({ searching: false})
+    } else {
+      this.setState({ searching: true})
+    }
+    console.log(`this.state.searching = ${this.state.searching}`)
+    console.log(query);
+    this.state.almost = this.state.pokemons.filter((x) => x.name.includes(query));
+    console.log(this.state.almost);
+    //let found = this.state.pokemons.find(({ name }) => name === query);
+    // console.log(found);
   };
 
   componentDidMount() {
@@ -15,7 +33,8 @@ class PokemonPage extends React.Component {
       .then((data) => {
         this.setState({
           pokemons: data,
-          color: "blue"
+          almost: data,
+          color: "blue",
         });
       });
   }
@@ -27,9 +46,13 @@ class PokemonPage extends React.Component {
         <br />
         <PokemonForm />
         <br />
-        <Search />
+        <Search search={this.search} />
         <br />
-        <PokemonCollection color={this.state.color} pokemons={this.state.pokemons}></PokemonCollection>
+        <PokemonCollection
+          color={this.state.color}
+          //pokemons={this.state.pokemons}
+          pokemons={this.state.almost}
+        ></PokemonCollection>
       </div>
     );
   }
