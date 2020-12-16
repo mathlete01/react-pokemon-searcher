@@ -13,16 +13,12 @@ class PokemonPage extends React.Component {
 
   search = (e) => {
     const query = e.target.value;
-    // query === "" ? this.setState({ searching == false}) : this.setState({searching==true})
     if(query === "") {
       this.setState({ searching: false})
     } else {
       this.setState({ searching: true})
     }
-    console.log(`this.state.searching = ${this.state.searching}`)
-    console.log(query);
     this.state.almost = this.state.pokemons.filter((x) => x.name.includes(query));
-    console.log(this.state.almost);
     //let found = this.state.pokemons.find(({ name }) => name === query);
     // console.log(found);
   };
@@ -34,7 +30,6 @@ class PokemonPage extends React.Component {
         this.setState({
           pokemons: data,
           almost: data,
-          color: "blue",
         });
       });
   }
@@ -49,7 +44,6 @@ class PokemonPage extends React.Component {
         <Search search={this.search} />
         <br />
         <PokemonCollection
-          color={this.state.color}
           //pokemons={this.state.pokemons}
           pokemons={this.state.almost}
         ></PokemonCollection>
