@@ -7,21 +7,19 @@ class PokemonCard extends React.Component {
   }
 
   render() {
-    console.log(`Pokemon Card Drawn to screen supposedly`)
-    //console.log(this.props)
     return (
       <Card>
         <div>
           <div className="image">
-            <img alt="oh no!" />
+            <img src={this.props.front} alt={this.props.name}/>
           </div>
           <div className="content">
-            <div className="header">Name: {this.props.name}</div>
+            <div className="header"><h1>{this.props.name}</h1></div>
           </div>
           <div className="extra content">
             <span>
               <i className="icon heartbeat red" />
-              POKEMON HP HERE hp
+              {this.props.hp}
             </span>
           </div>
         </div>

@@ -10,8 +10,7 @@ class PokemonCollection extends React.Component {
   renderPokemonCards = () => {
     return this.props.pokemons.map(
       pokemon => 
-      // console.log(pokemon)
-      <PokemonCard name={pokemon.name} />
+      <PokemonCard name={pokemon.name} front={pokemon.sprites.front} back={pokemon.sprites.back} hp = {pokemon.hp}/>
     )
   };
 
