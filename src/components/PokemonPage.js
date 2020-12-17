@@ -8,17 +8,19 @@ class PokemonPage extends React.Component {
   state = {
     pokemons: [],
     searching: false,
-    searchResults: []
+    searchResults: [],
   };
 
   search = (e) => {
     const query = e.target.value;
-    if(query === "") {
-      this.setState({ searching: false})
+    if (query === "") {
+      this.setState({ searching: false });
     } else {
-      this.setState({ searching: true})
+      this.setState({ searching: true });
     }
-    this.state.searchResults = this.state.pokemons.filter((x) => x.name.includes(query));
+    this.setState({
+      searchResults: this.state.pokemons.filter((x) => x.name.includes(query)),
+    });
     //let found = this.state.pokemons.find(({ name }) => name === query);
     // console.log(found);
   };
@@ -34,21 +36,46 @@ class PokemonPage extends React.Component {
       });
   }
 
+  addPokemon = (e) => {
+    let formData = {
+      name: e.target.elements.name.value,
+      hp: e.target.elements.hp.value,
+      sprites: {
+        front: e.target.elements.frontUrl.value,
+        back: e.target.elements.backUrl.value,
+      },
+    };
+    let configObj = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(formData),
+    };
+    fetch("http://localhost:3000/pokemon", configObj)
+      .then((res) => res.json())
+      // .then((data) => {
+      //   this.setState({
+      //     searchResults: data,
+      //   });
+      // });
+  };
+
   render() {
     return (
-      <div>
+      <Container>
         <h1>Pokemon Searcher</h1>
         <br />
-        <PokemonForm />
+        <PokemonForm addPokemon={this.addPokemon} />
         <br />
         <Search search={this.search} />
         <br />
         <PokemonCollection
-
           //pokemons={this.state.pokemons}
           pokemons={this.state.searchResults}
         ></PokemonCollection>
-      </div>
+      </Container>
     );
   }
 }
